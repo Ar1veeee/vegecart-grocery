@@ -54,8 +54,8 @@ const Navbar = () => {
                 </div>
 
                 <div onClick={() => navigate("/cart")} className="relative cursor-pointer">
-                    <NavCartIcon className="w-8 h-8 opacity-80 transition hover:text-primary-dull hover:scale-110" />
-                    <button className="absolute -top-2 -right-3 text-xs text-white bg-primary w-[18px] h-[18px] rounded-full">3</button>
+                    <NavCartIcon className="w-7 h-7 opacity-80 transition hover:text-primary-dull hover:scale-110" />
+                    <button className="absolute -top-2 -right-3 text-xs text-white bg-primary w-[18px] h-[18px] rounded-full">0</button>
                 </div>
 
                 {!user ? (<button onClick={() => setShowUserLogin(true)} className="cursor-pointer px-8 py-2 bg-primary hover:bg-primary-dull text-white rounded-full hover:scale-105 transition">
