@@ -1,19 +1,25 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-
-import { assets } from '../assets/assets'
+import React, { useEffect } from 'react'
+import { NavLink, useLocation } from 'react-router-dom'
+import { assets, headerData } from '../assets/assets'
 import { useAppContext } from '../hooks/useAppContext'
 import SearchIcon from './icons/SearchIcon'
 import NavCartIcon from './icons/NavCartIcon'
 
 const Navbar = () => {
-    const [open, setOpen] = React.useState(false)
-    const { user, setUser, setShowUserLogin, navigate } = useAppContext();
+    const [open, setOpen] = React.useState(false);
+    const { user, setUser, setShowUserLogin, navigate, searchQuery, setSearchQuery } = useAppContext();
+    const location = useLocation();
 
     const logout = async () => {
         setUser(null);
         navigate('/');
-    }
+    };
+
+    useEffect(() => {
+        if (searchQuery.length > 0) {
+            navigate('/products');
+        }
+    }, [searchQuery, navigate]);
 
     return (
         <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white relative transition-all">
@@ -24,12 +30,22 @@ const Navbar = () => {
 
             {/* Desktop Menu */}
             <div className="hidden sm:flex items-center gap-8">
-                <NavLink to='/' className="hover:text-primary-dull hover:scale-105 transition-transform">Home</NavLink>
-                <NavLink to='/products' className="hover:text-primary-dull hover:scale-105 transition-transform">All Product</NavLink>
-                <NavLink to='/' className="hover:text-primary-dull hover:scale-105 transition-transform">Contact</NavLink>
+                {headerData.map((item) => (
+                    <NavLink
+                        key={item.title}
+                        to={item.href}
+                        className={`hover:text-primary-dull transition-transform relative group ${location.pathname === item.href && "text-primary"}`}
+                    >
+                        {item.title}
+                        <span
+                            className={`absolute -bottom-0.5 left-0 right-0 mx-auto h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out ${location.pathname === item.href && "scale-x-100"}`}
+                        />
+                    </NavLink>
+                ))}
 
                 <div className={`hidden lg:flex items-center text-sm gap-2 border px-3 rounded-full group border-gray-300 hover:border-primary-dull transition-colors focus-within:border-primary-dull focus-within:text-primary-dull`}>
                     <input
+                        onChange={(e) => setSearchQuery(e.target.value)}
                         className="py-1.5 w-full bg-transparent outline-none placeholder-gray-500"
                         type="text"
                         placeholder="Search products"

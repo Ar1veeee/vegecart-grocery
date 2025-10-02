@@ -3,7 +3,7 @@ import { categories } from '../assets/assets'
 import { useAppContext } from '../hooks/useAppContext'
 
 const Categories = () => {
-    const { navigate } = useAppContext
+    const { navigate } = useAppContext();
 
     return (
         <div className='mt-16'>

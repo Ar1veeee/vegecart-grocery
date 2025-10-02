@@ -3,7 +3,7 @@ import { assets } from "../assets/assets";
 import { useAppContext } from "../hooks/useAppContext";
 
 const ProductCard = ({ product }) => {
-    const { currency, cartItems, addToCart, removeFromCart, navigate } = useAppContext();
+    const { currency, cartItems, addToCart, removeFromCart } = useAppContext();
 
     return product && (
         <div className="border border-gray-500/20 rounded-md md:px-4 px-3 py-2 bg-white max-w-54 w-full">

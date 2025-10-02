@@ -102,6 +102,21 @@ export const assets = {
   box_icon,
 };
 
+export const headerData = [
+  {
+    title: "Home",
+    href: "/",
+  },
+  {
+    title: "All Produts",
+    href: "/products",
+  },
+  {
+    title: "Contact",
+    href: "/contact",
+  },
+];
+
 export const categories = [
   {
     text: "Organic veggies",

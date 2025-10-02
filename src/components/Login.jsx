@@ -3,12 +3,21 @@ import { useAppContext } from '../hooks/useAppContext';
 
 const Login = () => {
 
-  const { setShowUserLogin } = useAppContext();
+  const { setShowUserLogin, setUser } = useAppContext();
 
   const [state, setState] = React.useState("login");
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+    setUser({
+      email: "test@aliefarfn.dev",
+      name: "StackRiv"
+    })
+    setShowUserLogin(false);
+  }
 
   return (
     <div onClick={() => setShowUserLogin(false)} className='fixed top-0 bottom-0 left-0 right-0 z-30 flex items-center text-sm text-gray-600 bg-black/50 justify-center'>
@@ -19,7 +28,7 @@ const Login = () => {
           <h2 className="text-2xl font-semibold mb-6 text-center text-primary">Welcome <span className='text-gray-500'>back</span></h2>
         )}
 
-        <form>
+        <form onSubmit={onSubmitHandler}>
           {state === "register" && (
             <input
               id='name'
