@@ -45,6 +45,9 @@ const Navbar = () => {
 
                 <div className={`hidden lg:flex items-center text-sm gap-2 border px-3 rounded-full group border-gray-300 hover:border-primary-dull transition-colors focus-within:border-primary-dull focus-within:text-primary-dull`}>
                     <input
+                        id="search"
+                        name="search"
+                        autoComplete="off"
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="py-1.5 w-full bg-transparent outline-none placeholder-gray-500"
                         type="text"
