@@ -49,14 +49,32 @@ export const AppContextProvider = ({ children }) => {
     const removeFromCart = (itemId) => {
         let cartData = structuredClone(cartItems)
         if (cartData[itemId]) {
-            cartData[itemId] -= 1;
-            if (cartData[itemId] === 0) {
-                delete cartData[itemId]
-            }
+            delete cartData[itemId]
         }
         setCartItems(cartData)
         toast.success('Removed from Cart')
     }
+
+    // Get Cart Item Count
+    const getCartCount = () => {
+        let totalCount = 0;
+        for (const key in cartItems) {
+            totalCount += cartItems[key];
+        }
+        return totalCount;
+    };
+
+    // Get Cart Total Amount
+    const getCartAmount = () => {
+        let totalAmount = 0;
+        for (const key in cartItems) {
+            let itemInfo = products.find((product) => product._id === key);
+            if (cartItems[key] > 0) {
+                totalAmount += cartItems[key] * itemInfo.offerPrice;
+            }
+        }
+        return Math.floor(totalAmount * 100) / 100;
+    };
 
     useEffect(() => {
         fetchProducts()
@@ -78,6 +96,8 @@ export const AppContextProvider = ({ children }) => {
         removeFromCart,
         searchQuery,
         setSearchQuery,
+        getCartCount,
+        getCartAmount,
     }
 
     return <AppContext.Provider value={value}>
