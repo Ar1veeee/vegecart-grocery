@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { assets, headerData } from '../assets/assets'
 import { useAppContext } from '../hooks/useAppContext'
@@ -6,8 +6,8 @@ import SearchIcon from './icons/SearchIcon'
 import NavCartIcon from './icons/NavCartIcon'
 
 const Navbar = () => {
-    const [open, setOpen] = React.useState(false);
-    const { user, setUser, setShowUserLogin, navigate, searchQuery, setSearchQuery } = useAppContext();
+    const [open, setOpen] = useState(false);
+    const { user, setUser, setShowUserLogin, navigate, searchQuery, setSearchQuery, getCartCount } = useAppContext();
     const location = useLocation();
 
     const logout = async () => {
@@ -55,7 +55,7 @@ const Navbar = () => {
 
                 <div onClick={() => navigate("/cart")} className="relative cursor-pointer">
                     <NavCartIcon className="w-7 h-7 opacity-80 transition hover:text-primary-dull hover:scale-110" />
-                    <button className="absolute -top-2 -right-3 text-xs text-white bg-primary w-[18px] h-[18px] rounded-full">0</button>
+                    <button className="absolute -top-2 -right-3 text-xs text-white bg-primary w-[18px] h-[18px] rounded-full">{getCartCount()}</button>
                 </div>
 
                 {!user ? (<button onClick={() => setShowUserLogin(true)} className="cursor-pointer px-8 py-2 bg-primary hover:bg-primary-dull text-white rounded-full hover:scale-105 transition">
@@ -82,10 +82,15 @@ const Navbar = () => {
                 }
             </div>
 
-            <button onClick={() => setOpen(!open)} aria-label="Menu" className="sm:hidden">
-                {/* Menu Icon SVG */}
-                <img src={assets.menu_icon} alt="menu" className='' />
-            </button>
+            <div className='flex items-center gap-6 sm:hidden'>
+                <div onClick={() => navigate("/cart")} className="relative cursor-pointer">
+                    <NavCartIcon className="w-7 h-7 opacity-80 transition hover:text-primary-dull hover:scale-110" />
+                    <button className="absolute -top-2 -right-3 text-xs text-white bg-primary w-[18px] h-[18px] rounded-full">{getCartCount()}</button>
+                </div>
+                <button onClick={() => setOpen(!open)} aria-label="Menu">
+                    <img src={assets.menu_icon} alt="menu" className='' />
+                </button>
+            </div>
 
             {/* Mobile Menu */}
             {open && (
